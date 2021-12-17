@@ -11,6 +11,7 @@ int main()
 
 	int zeroarray[12]{};
 	int onearray[12]{};
+	int binarray[12]{};
 	int i{};
 
 	int gamma{};
@@ -34,32 +35,20 @@ int main()
 	for (i = 0; i < 12; i++)
 	{
 		if (onearray[i] > zeroarray[i])
-		{
-			gamma = gamma + pow(2, k);
-			cout << gamma << " ";
-			k--;
-		}
+			binarray[i] = 1;
+
 		else if (onearray[i] < zeroarray[i])
-		{
-			epsilon = epsilon + pow(2, k);
-			cout << epsilon << " ";
-			k--;
-		}
+			binarray[i] = 0;
 	}
 
-	cout << "\n";
-
-	for (i = 0; i < 12; i++)
-		cout << zeroarray[i] << " ";
-
-	cout << "\n";
-
-	for (i = 0; i < 12; i++)
-		cout << onearray[i] << " ";
-
-	cout << "\n";
-
-	cout << "the so called result is " << epsilon * gamma;
+	while (getline(myfile, line))
+	{
+		if ((line.at(0) == binarray[0])&& (line.at(1) == binarray[1])&& (line.at(2) == binarray[2])&& 
+			(line.at(3) == binarray[3])&& (line.at(4) == binarray[4])&& (line.at(5) == binarray[5])&& 
+			(line.at(6) == binarray[6])&& (line.at(7) == binarray[7])&& (line.at(8) == binarray[8])&& 
+			(line.at(9) == binarray[9])&& (line.at(10) == binarray[10])&& (line.at(11) == binarray[11]))
+			cout << "and the winner is me" << "\n"
+	}
 
 	myfile.close();
 
