@@ -1,0 +1,38 @@
+	{
+
+	}
+
+	for (i = 0; i < 12; i++)
+	{
+		if (onearray[i] > zeroarray[i])
+		{
+			binarrayox[i] = 1;
+			binarrayco[i] = 0;
+		}
+
+		else if (onearray[i] < zeroarray[i])
+		{
+			binarrayox[i] = 0;
+			binarrayco[i] = 1;
+		}
+	}
+
+	for (i = 0; i < 12; i++)
+	{
+		cout << binarrayox[i] << " ";
+	}
+
+	myfile.close();
+	myfile.open("input.txt", ios::in);
+
+	while (getline(myfile, line))
+	{
+		if (line.at(0) - 48 == binarrayox[0] && oxygen < 2048)
+		{
+			oxygen = oxygen + 2048
+		}
+     
+	}
+
+	cout << "oxygen is " << oxygen << " and co2 is " << cotwo << endl;
+	cout << "life support rating is " << oxygen * cotwo;

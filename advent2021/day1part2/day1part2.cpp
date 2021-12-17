@@ -10,9 +10,6 @@ int main()
 
     fstream datafile;
 
-    void bubbleSort(int list[], int length);
-    void selectionSort(int list[], int length);
-
     datafile.open("input.txt");
 
     while (!datafile.eof())
