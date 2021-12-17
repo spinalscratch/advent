@@ -1,75 +1,50 @@
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <math.h> 
-using namespace std;
+#include "day03.h"
 
-int main()
-{
+#include <cmath>
+#include <list>
+#include <functional>
 
-	int i{};
-	int oxygen{};
-	int cotwo{};
-	int num{};
-	int more{};
-	int binaryarray[1000]{};
-	
-	fstream datafile;
-	string line;
+day03::input_t day03::parse(const parse_t& input) {
+    return input;
+}
 
+day03::output_t day03::first_part(const day03::input_t& input) {
+    std::vector<int> counts(input[0].size(), 0);
+    for (const auto& i : input)
+        for (int j = 0; j < i.size(); j++)
+            counts[j] += i[j] == '1';
+    long res = 0;
+    for (size_t half = input.size() >> 1; int count : counts)
+        res = (res + (count > half)) << 1;
+    res >>= 1;
+    return res * (res ^ ((int)std::pow(2.0, (double)counts.size()) - 1));
+}
 
-    datafile.open("input.txt");
+auto get_rating(const std::vector<std::string>& input, const std::function<bool(int, int)>& f) {
+    if (input.empty()) return 0;
+    std::list<std::string> result(input.begin(), input.end());
+    for (int bit = 0; result.size() > 1 && bit < input[0].size(); bit++) {
+        int count = 0;
+        for (const auto& r : result)
+            count += r[bit] == '0';
+        char c = f(count, (int)result.size() / 2) ? '1' : '0';
+        for (auto it = result.begin(); it != result.end();) {
+            if ((*it)[bit] != c) it = result.erase(it);
+            else it++;
+        }
+    }
+    if (result.empty()) return 0;
+    return (int)std::stol(*result.begin(), nullptr, 2);
+}
 
-	while (getline(datafile, line))
-    {
-		for (i = 0; i < 12; i++)
-		{
-			if (line.at(i) - 48 == 1)
-			{
-				binaryarray[num] = binaryarray[num] + pow(2, 11 - i);
-			}
-		}
-		num++;
-	}
+day03::output_t day03::second_part(const day03::input_t& input) {
+    return get_rating(input, std::less_equal<>()) * get_rating(input, std::greater<>());
+}
 
-	for (i = 0; i < 1000; i++)
-	{
-		if (binaryarray[i] >= 2048)
-		{
-			more++;
+day03::output_t day03::expected_p1() {
+    return 2967914;
+}
 
-		}
-	}
-
-	myfile.close();
-	myfile.open("input.txt", ios::in);
-
-	while (getline(myfile, line))
-	{
-		if (((line.at(0) - 48) == binarray[0]) && (line.at(1) - 48 == binarray[1]) && (line.at(2) - 48 == binarray[2]) &&
-			(line.at(3) - 48 == binarray[3]) && (line.at(4) - 48 == binarray[4]) && (line.at(5) - 48 == binarray[5]) &&
-			(line.at(6) - 48 == binarray[6]) && (line.at(7) - 48 == binarray[7]) && (line.at(8) - 48 == binarray[8]) &&
-			(line.at(9) - 48 == binarray[9]) && (line.at(10) - 48 == binarray[10]) && (line.at(11) - 48 == binarray[11]))
-		{
-			cout << "\n" << "and the winner is me" << "\n";
-			for (i = 0; i < 12; i++)
-			{
-				if (binarray[i] == 1)
-				{
-					oxygen = oxygen + pow(2, k);
-					k--;
-				}
-				else if (binarray[i] == 0)
-				{
-					cotwo = cotwo + pow(2, k);
-					k--;
-				}
-			}
-		}
-	}
-
-
-	datafile.close();
-
-	return 0;
+day03::output_t day03::expected_p2() {
+    return 7041258;
 }
